@@ -1,0 +1,36 @@
+#Rust
+import random,time
+print("Hello welcome to RTB\nGet started by pressing ?")
+unseen_inv = {}
+res={}
+base={}
+craft={}
+def farm_command():
+    pass
+def craft_command():
+    pass
+def smelt_command():
+    pass
+def base_command():
+    pass
+def help_command():
+    print("f - The farming Command,Use this when ever you wanna start farming\nc - View a crafting list and create new tools and furniture\ns - Smelt items\nb - Edit and upgrade your base!\n? - View the help list(What your reading)  ")
+def check_commands():
+    if command not in ["f,c,s,b,?,exit"]:
+        print("Invalid command")
+    else:
+        if command == "f":
+            farm_command()
+        elif command == "c":
+            craft_command()
+        elif command == "s":
+            smelt_command()
+        elif command == "b":
+            base_command()
+        elif command == "?":
+            help_command()
+        elif command == "exit":
+            pass
+while True:
+    command = input(">>").lower()
+    check_commands()

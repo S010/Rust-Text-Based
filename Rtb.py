@@ -2,23 +2,23 @@
 import random,time
 print("Hello welcome to RTB\nGet started by pressing ?")
 unseen_inv = {"rockh":1,"rockp":1}
-res={"wood":0,"stone":0,"metal":0,"cloth":0,"fuel":0}
+res={"wood":0,"stone":0,"metal":0,"cloth":0,"fuel":0,"animal_fat":0}
 smelting = {"metal_ore":0}
 weapons = {"bow":0,"arrow":0}
 base={"furnace":0}
 craft={"sp":0,"sh":0,"mp":0,"mh":0}
 #Farming//////////////////////////////////////////////////////////////////////////////////////
-def farming(name,res,res2,n,n2,t,name2):
+def farming(name,l,q,l2,q2,n,n2,t,name2):
     print("Farming...")
-    res+=n
-    res2+=n2
+    l[q] += n
+    l2[q2] += n2
     time.sleep(t)
     print(name,"+",n)
-    if (res2 or n2 or name2 != ""):
+    if (l2 or q2 or n2 or name2 != ""):
         print(name2,"+",n2)
 def farm_wood():
     if unseen_inv["rockh"] == 1:
-        farming("Wood",res["wood"],"",100,"",3,"")
+        farming("Wood",res,"wood",res,"",100,0,3,"")
     elif craft["sh"] == 1:
         farming("Wood",res["wood"],"",200,"",2,"")
     elif craft["mh"] == 1:
@@ -119,6 +119,35 @@ def smelt_check():
         print("Smelted all your ores!\nWood - 200\nMetal +",smelting["metal_ore"],"")
         smelting["metal_ore"] -= smelting["metal_ore"]
 #/////////////////////////////////////////////////////////////////////////////////////////////
+def hunting(a):
+    randn = random.randint(1,4)
+    if randn < 3:
+        print("You almost got killed by the",a,"but you got away")
+    elif randn > 2:
+        print("You killed the",a)
+        if a == "bear":
+            print("Cloth + 50\nAnimal Fat + 100")
+            res["cloth"] += 50
+            res["animal_fat"] +=100
+        elif a == "boar":
+            print("Cloth + 20\nAnimal Fat + 80")
+            res["cloth"] += 20
+            res["animal_fat"] += 80
+        elif a == "wolf":
+            print("Cloth + 20\nAnimal Fat + 50")
+            res["cloth"] += 20
+            res["animal_fat"]+= 50
+def check_hunting():#
+    if weapons["arrow"] <= 3:
+        print("You dont have enough arrows to go hunting")
+    elif  weapons["bow"]  != 1:
+        print("Please craft a bow before hunting")
+    else:
+        randani = random.choice(["bear"],["boar"],["wolf"])
+        hunting(randani)
+
+
+
 def base_command():
     pass
 def help_command():
@@ -129,7 +158,9 @@ def check_commands():
     if command not in ["i","h","f","c","s","b","?","exit",""]:
         print("Invalid command")
     else:
-        if command == "i":
+        if command == "h":
+            check_hunting()
+        elif command == "i":
             print("Wood:",res["wood"],"\nStone:",res["stone"],"\nCloth:",res["cloth"],"\nMetal:",res["metal"],"\nFuel:",res["fuel"])
         elif command == "f":
             check_farm()
@@ -144,9 +175,7 @@ def check_commands():
         elif command == "exit":
             pass
 
-try:
-    while True:
-        command = input(">>").lower().strip(" ")
-        check_commands()
-except:
-    exit
+
+while True:
+    command = input(">>").lower().strip(" ")
+    check_commands()

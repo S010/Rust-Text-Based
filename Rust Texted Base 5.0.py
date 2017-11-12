@@ -174,4 +174,3 @@ try:
         check_commands()
 except:
     exit
-    
